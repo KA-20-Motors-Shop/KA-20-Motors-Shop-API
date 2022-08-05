@@ -30,8 +30,8 @@ class Ad {
   @Column()
   image: string;
 
-  @Column("string", { array: true })
-  gallery: string[];
+  @Column({ array: true })
+  gallery: string;
 
   @Column("date")
   createdOn: string;
