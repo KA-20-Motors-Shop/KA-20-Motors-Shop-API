@@ -6,7 +6,7 @@ export default class AdsController {
 
         // preencher com o service equivalente e descomentar as seguintes linhas:
         
-        // const created_ad = await createAdService(bodyContent);
+        // const created_ad = await -->createAdService<--(bodyContent);
         // return response.status(201).json(created_ad);
 
     }    
@@ -23,7 +23,7 @@ export default class AdsController {
     }
  
     static delete = async(request: Request, response: Response) => {
-        
+
     }
  
 };
