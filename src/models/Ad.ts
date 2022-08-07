@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
 import User from "./User";
 
 @Entity("Ads")
@@ -36,7 +42,8 @@ class Ad {
   @Column("date")
   createdOn: string;
 
-  @ManyToOne(() => User, (user) => user.ads)
+  @ManyToOne(() => User, { eager: true, onDelete: "SET NULL" })
+  @JoinColumn({ name: "user_id" })
   user: User;
 }
 
