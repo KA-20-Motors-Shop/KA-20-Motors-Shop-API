@@ -45,9 +45,6 @@ class User {
   @Column()
   accountType: string;
 
-  @OneToMany(() => Ad, (ad) => ad.user)
-  ads: Ad[];
-
   @Column()
   password: string;
 }
