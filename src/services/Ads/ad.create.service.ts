@@ -3,7 +3,7 @@ import { AppDataSource } from "../../data-source";
 import AppError from "../../errors/AppError";
 import Ad from "../../models/Ad";
 
-const createDriverService = async (bodyContent: IAdCreation) => {
+const createAdService = async (bodyContent: IAdCreation) => {
   const adRepo = AppDataSource.getRepository(Ad);
 
   const ads = await adRepo.find();
@@ -33,4 +33,4 @@ const createDriverService = async (bodyContent: IAdCreation) => {
   return newAd;
 };
 
-export default createDriverService;
+export default createAdService;
