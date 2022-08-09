@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import listAdService from "../services/Ads/ad.list.service";
+import createAdService from "../services/Ads/ad.create.service";
 
 export default class AdsController {
   static store = async (request: Request, response: Response) => {
@@ -7,8 +8,8 @@ export default class AdsController {
 
     // preencher com o service equivalente e descomentar as seguintes linhas:
 
-    // const created_ad = await -->createAdService<--(bodyContent);
-    // return response.status(201).json(created_ad);
+    const created_ad = await createAdService(bodyContent);
+    return response.status(201).json(created_ad);
   };
   static list = async (request: Request, response: Response) => {
     const ads = await listAdService();
