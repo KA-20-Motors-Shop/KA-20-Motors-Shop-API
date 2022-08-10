@@ -6,11 +6,9 @@ import Ad from "../../models/Ad";
 const createAdService = async (bodyContent: IAdCreation) => {
   const adRepo = AppDataSource.getRepository(Ad);
 
-  const ads = await adRepo.find();
+  const ads = await adRepo.findOneBy({ title: bodyContent.title });
 
-  const existentAd = ads.find((ad) => ad.title === bodyContent.title);
-
-  if (existentAd) {
+  if (ads) {
     throw new AppError("Ad already registered", 409);
   }
 
