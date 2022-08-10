@@ -4,19 +4,21 @@ import { IAdUpdate } from "../../interfaces/Ad/ad.interface";
 import Ad from "../../models/Ad";
 
 const updateAdService = async ({
+  id,
   adType,
   title,
   year,
   price,
   description,
   vehicleType,
+  mileage,
   image,
   gallery,
   isActive,
 }: IAdUpdate) => {
   const adRepo = AppDataSource.getRepository(Ad);
 
-  const foundAd = await adRepo.findOneBy({ title: title });
+  const foundAd = await adRepo.findOneBy({ id: id });
 
   if (!foundAd) {
     throw new AppError("Ad not found", 400);
@@ -31,6 +33,7 @@ const updateAdService = async ({
   image ? (foundAd.image = image) : foundAd.image;
   gallery ? (foundAd.gallery = gallery) : foundAd.gallery;
   isActive ? (foundAd.isActive = isActive) : foundAd.isActive;
+  mileage ? (foundAd.mileage = mileage) : foundAd.mileage;
 
   return adRepo.save(foundAd);
 };
