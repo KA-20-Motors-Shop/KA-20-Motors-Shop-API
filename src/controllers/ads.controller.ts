@@ -6,8 +6,8 @@ export default class AdsController {
   static store = async (request: Request, response: Response) => {
     const bodyContent = request.body;
 
-    const created_ad = await createAdService(bodyContent);
-    return response.status(201).json(created_ad);
+    const createdAd = await createAdService(bodyContent);
+    return response.status(201).json(createdAd);
   };
   static list = async (request: Request, response: Response) => {
     const ads = await listAdService();
