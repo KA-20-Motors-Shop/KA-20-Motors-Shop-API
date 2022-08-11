@@ -42,6 +42,9 @@ class Ad {
   @Column("date")
   createdOn: string;
 
+  @Column()
+  isActive: boolean;
+
   @ManyToOne(() => User, { eager: true, onDelete: "SET NULL" })
   @JoinColumn({ name: "user_id" })
   user: User;
