@@ -47,5 +47,10 @@ export default class UserController {
         
         return response.status(204).json()
     }
+
+    static login = async(request:Request, response: Response) => {
+        const {email, password} =  request.body;
+        return response.json({"message":"hello world", "email": email, "password": password})
+    }
  
 };

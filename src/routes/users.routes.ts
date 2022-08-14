@@ -10,6 +10,7 @@ export const usersRoutes = () => {
     routes.get('/:user_id', UserController.index); 
     routes.patch('/:user_id', UserController.update);
     routes.delete('/:user_id', UserController.delete); 
+    routes.post('/login', UserController.login);
 
     return routes;
 }
