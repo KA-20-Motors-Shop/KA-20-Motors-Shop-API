@@ -2,6 +2,7 @@ import userCreateService from '../services/users/users.create.service';
 import userUpdateService from '../services/users/user.update.service';
 import userDeleteService from '../services/users/user.delete.service';
 import userIndexService from '../services/users/user.index.service';
+import userLoginService from '../services/users/user.login.service';
 import userListService from '../services/users/users.list.service';
 import { IUserResponse } from '../interfaces/User/user.interface';
 import {Request, Response} from 'express';
@@ -50,7 +51,9 @@ export default class UserController {
 
     static login = async(request:Request, response: Response) => {
         const {email, password} =  request.body;
-        return response.json({"message":"hello world", "email": email, "password": password})
+        const token = await userLoginService({email, password});
+        
+        return response.json(token)
     }
  
 };

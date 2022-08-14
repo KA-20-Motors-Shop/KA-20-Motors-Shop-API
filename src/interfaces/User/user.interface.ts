@@ -21,3 +21,8 @@ export type IUpdateUser =  {
     complement?: string;
     password?:string;
 }
+
+export type IUserLogin = {
+    email: string;
+    password: string;
+}
