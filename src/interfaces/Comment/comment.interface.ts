@@ -1,3 +1,3 @@
 import Comment from "../../models/Comment";
 
-export type ICommentCreation = Omit<Comment, "id">;
+export type ICommentCreation = Omit<Comment, "id" | "createdOn">;
