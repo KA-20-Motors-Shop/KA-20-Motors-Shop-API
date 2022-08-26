@@ -14,6 +14,9 @@ class Comment {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  @Column("date")
+  createdOn: string;
+
   @Column()
   description: string;
 
