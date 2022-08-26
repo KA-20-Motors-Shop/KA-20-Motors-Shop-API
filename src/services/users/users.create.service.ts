@@ -1,11 +1,11 @@
-import { IUserCreation } from "../../interfaces/User/user.interface";
+import { IUserCreation, IUserResponse } from "../../interfaces/User/user.interface";
 import { AppDataSource } from "../../data-source";
 import AppError from "../../errors/AppError";
 import User from "../../models/User";
 import bcrypt from "bcrypt"
 
 
-const userCreateService =  async(requestObject: IUserCreation) => {
+const userCreateService =  async(requestObject: IUserCreation):Promise<IUserResponse> =>  {
     const userRepository = AppDataSource.getRepository(User);
 
     const user = await userRepository.findOne({where:{email:requestObject.email}});
