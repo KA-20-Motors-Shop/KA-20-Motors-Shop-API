@@ -7,10 +7,10 @@ export const commentsRoutes = () => {
 
     routes.post('/', CommentsController.store);
     routes.get('/', CommentsController.list);
-    routes.get('/:ads_id', CommentsController.index);
+    routes.get('/:comment_id', CommentsController.index);
     // routes.get('/user/:user_id', CommentsController.listAdByUser); 
-    routes.patch('/:ads_id', CommentsController.update);
-    routes.delete('/:ads_id', CommentsController.delete); 
+    routes.patch('/:comment_id', CommentsController.update);
+    routes.delete('/:comment_id', CommentsController.delete); 
 
     return routes;
 }

@@ -28,6 +28,7 @@ export default class CommentsController {
 
   static index = async (request: Request, response: Response) => {
     const {comment_id} = request.params;
+    console.log(comment_id, '<-----------------------------------');
     const comment = await commentIndexService({comment_id});
     return response.json(comment);
   };
