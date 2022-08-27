@@ -8,7 +8,7 @@ export const commentsRoutes = () => {
     routes.post('/', CommentsController.store);
     routes.get('/', CommentsController.list);
     routes.get('/:comment_id', CommentsController.index);
-    // routes.get('/user/:user_id', CommentsController.listAdByUser); 
+    routes.get('/ad/:ad_id', CommentsController.listByAd); 
     routes.patch('/:comment_id', CommentsController.update);
     routes.delete('/:comment_id', CommentsController.delete); 
 

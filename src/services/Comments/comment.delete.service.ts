@@ -11,10 +11,6 @@ const commentDeleteService = async({comment_id}: ICommentID) => {
         throw new AppError('Comment not found.', 404);
     }
 
-    // if(comment.id !== id){
-    //     throw new AppError('Comment not found', 404);
-    // }
-
     await commentRepository.delete(comment!.id);
 
     return comment;
