@@ -20,13 +20,13 @@ class Comment {
   @Column()
   description: string;
 
+  @ManyToOne(() => Ad, (ad) => ad.comments)
+  @JoinColumn({ name: "ad_id" })
+  ad: Ad;
+
   @OneToOne(() => User, { cascade: true })
   @JoinColumn({ name: "user_id" })
   user: User;
-
-  @ManyToOne(() => Ad, { eager: true, onDelete: "SET NULL" })
-  @JoinColumn({ name: "ad_id" })
-  ad: Ad;
 }
 
 export default Comment;

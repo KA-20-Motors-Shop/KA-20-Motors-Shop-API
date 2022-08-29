@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  OneToOne,
+  JoinColumn,
+} from "typeorm";
 import Ad from "./Ad";
 
 @Entity("Users")
@@ -47,6 +54,13 @@ class User {
 
   @Column()
   password: string;
+
+  @OneToMany(() => Ad, (ad) => ad.user)
+  ads: Ad[];
+
+  @OneToOne(() => Comment, { cascade: true })
+  @JoinColumn({ name: "comment_id" })
+  comment: Comment;
 }
 
 export default User;

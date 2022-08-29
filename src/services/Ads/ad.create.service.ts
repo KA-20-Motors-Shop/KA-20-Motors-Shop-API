@@ -24,6 +24,7 @@ const createAdService = async (bodyContent: IAdCreation) => {
   newAd.gallery = bodyContent.gallery;
   newAd.createdOn = bodyContent.createdOn;
   newAd.user = bodyContent.user;
+  newAd.isActive = true;
 
   adRepo.create(newAd);
   await adRepo.save(newAd);
