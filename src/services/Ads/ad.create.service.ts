@@ -3,22 +3,23 @@ import { AppDataSource } from "../../data-source";
 import AppError from "../../errors/AppError";
 import Ad from "../../models/Ad";
 import User from "../../models/User";
-import { SimpleConsoleLogger } from "typeorm";
 
-const createAdService = async (bodyContent: IAdCreation) =>  {
+const createAdService = async (bodyContent: IAdCreation) => {
   const adRepo = AppDataSource.getRepository(Ad);
 
   const ads = await adRepo.findOneBy({ title: bodyContent.title });
 
   const userRepository = AppDataSource.getRepository(User);
-  const user = await userRepository.findOne({where:{id: bodyContent.user.id}})
+  const user = await userRepository.findOne({
+    where: { id: bodyContent.user.id },
+  });
 
   if (ads) {
     throw new AppError("Ad already registered", 409);
   }
-  
-  if(!user) {
-    throw new AppError("Invalid User", 400)
+
+  if (!user) {
+    throw new AppError("Invalid User", 400);
   }
 
   const newAd = new Ad();
@@ -35,10 +36,9 @@ const createAdService = async (bodyContent: IAdCreation) =>  {
   newAd.user = bodyContent.user;
   newAd.isActive = bodyContent.isActive;
 
-
   adRepo.create(newAd);
   await adRepo.save(newAd);
-  
+
   return newAd;
 };
 
