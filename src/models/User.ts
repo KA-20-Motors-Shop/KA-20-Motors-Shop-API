@@ -2,10 +2,11 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToMany,
-  OneToOne,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
+
+import Comment from "./Comment";
 import Ad from "./Ad";
 
 @Entity("Users")
@@ -58,9 +59,10 @@ class User {
   @OneToMany(() => Ad, (ad) => ad.user)
   ads: Ad[];
 
-  @OneToOne(() => Comment, { cascade: true })
-  @JoinColumn({ name: "comment_id" })
-  comment: Comment;
+  @OneToMany(() => Comment, comment => comment.user, {
+    eager:true
+  })
+  comments: Comment[];
 }
 
 export default User;
