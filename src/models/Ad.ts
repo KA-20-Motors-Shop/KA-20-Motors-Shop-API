@@ -7,6 +7,7 @@ import {
   JoinColumn,
 } from "typeorm";
 import User from "./User";
+import Comment from "./Comment";
 
 @Entity("Ads")
 class Ad {

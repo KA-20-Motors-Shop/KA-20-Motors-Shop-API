@@ -53,7 +53,7 @@ export default class AdsController {
       mileage,
       image,
       gallery,
-      isActive,
+      isActive
     });
 
     return response.status(200).json(ad);
