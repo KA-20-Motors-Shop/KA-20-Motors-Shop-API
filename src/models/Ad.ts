@@ -3,9 +3,11 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
+  OneToMany,
   JoinColumn,
 } from "typeorm";
 import User from "./User";
+import Comment from "./Comment";
 
 @Entity("Ads")
 class Ad {
@@ -48,6 +50,9 @@ class Ad {
   @ManyToOne(() => User, { eager: true, onDelete: "SET NULL" })
   @JoinColumn({ name: "user_id" })
   user: User;
+
+  @OneToMany(() => Comment, (comment) => comment.ad)
+  comments: Comment[];
 }
 
 export default Ad;

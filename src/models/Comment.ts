@@ -2,9 +2,9 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToOne,
   JoinColumn,
   OneToOne,
+  ManyToOne,
 } from "typeorm";
 import User from "./User";
 import Ad from "./Ad";
@@ -20,13 +20,13 @@ class Comment {
   @Column()
   description: string;
 
-  @OneToOne(() => User, { cascade: true })
-  @JoinColumn({ name: "user_id" })
-  user: User;
-
-  @ManyToOne(() => Ad, { eager: true, onDelete: "SET NULL" })
+  @ManyToOne(() => Ad, (ad) => ad.comments)
   @JoinColumn({ name: "ad_id" })
   ad: Ad;
+
+  @ManyToOne(type => User, user => user.comments)
+  @JoinColumn({name: "user_id"})
+  user: User
 }
 
 export default Comment;

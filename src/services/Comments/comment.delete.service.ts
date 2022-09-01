@@ -5,15 +5,11 @@ import { ICommentID } from "../../interfaces/Comment/comment.interface";
 
 const commentDeleteService = async({comment_id}: ICommentID) => {
     const commentRepository = AppDataSource.getRepository(Comment);
-    const comment = await commentRepository.findOne({where:{id : comment_id}})
+    const comment = await commentRepository.findOne({where:{id: comment_id}});
 
     if(!comment){
         throw new AppError('Comment not found.', 404);
     }
-
-    // if(comment.id !== id){
-    //     throw new AppError('Comment not found', 404);
-    // }
 
     await commentRepository.delete(comment!.id);
 
