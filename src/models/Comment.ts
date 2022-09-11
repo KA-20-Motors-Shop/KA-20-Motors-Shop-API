@@ -15,7 +15,7 @@ class Comment {
   id: string;
 
   @Column("date")
-  createdOn: string;
+  createdOn: Date;
 
   @Column()
   description: string;

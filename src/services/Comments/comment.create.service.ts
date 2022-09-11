@@ -5,7 +5,7 @@ import User from "../../models/User";
 import AppError from "../../errors/AppError";
 import Ad from "../../models/Ad";
 
-const createCommentService = async ({createdOn, description, ad, user,}: ICommentCreation) => {
+const createCommentService = async ({description, ad, user,}: ICommentCreation) => {
   const commentRepo = AppDataSource.getRepository(Comment);
 
   const userRepository = AppDataSource.getRepository(User);
@@ -24,7 +24,7 @@ const createCommentService = async ({createdOn, description, ad, user,}: ICommen
 
   const newComment = new Comment();
   newComment.description = description;
-  newComment.createdOn = createdOn
+  newComment.createdOn = new Date();
   newComment.ad = ad;
   newComment.user = selectedUser;
 

@@ -42,7 +42,7 @@ class Ad {
   gallery: string;
 
   @Column("date")
-  createdOn: string;
+  createdOn: Date;
 
   @Column()
   isActive: boolean;

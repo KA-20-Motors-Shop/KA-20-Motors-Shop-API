@@ -9,10 +9,13 @@ import commentUpdateService from "../services/Comments/comment.update.service";
 
 export default class CommentsController {
   static store = async (request: Request, response: Response) => {
-    const { description, ad, user, createdOn  } = request.body;
-
-    const createComment = await createCommentService({ createdOn, description, ad, user });
-    return response.status(201).json(createComment);
+    const { description, ad, user} = request.body;
+    try {
+      const createComment = await createCommentService({ description, ad, user });
+      return response.status(201).json(createComment);
+    }catch(err){
+      return response.send(err)
+    }
   };
   static list = async (request: Request, response: Response) => {
     const comments = await commentListService()
