@@ -19,7 +19,6 @@ const userUpdateService =  async(dataObject: IUpdateUser) => {
         const hashedPassword = bcrypt.hashSync(dataObject.password, 8);   
         dataObject.password = hashedPassword;
     }
-    console.log(user, '<----- antes do updateduser');
     
     const {user_id, ...remainingDataObject} = dataObject
 
@@ -27,7 +26,6 @@ const userUpdateService =  async(dataObject: IUpdateUser) => {
         ...user,
         ...remainingDataObject,
     }
-    console.log( updatedUser, "chegou antes do update");
 
     // await userRepository.update(user!.id, updatedUser); // ERROR LINE
     await userRepository.save(updatedUser);

@@ -37,14 +37,10 @@ export default class UserController {
     static update = async(request: Request, response: Response) => {
         const {user_id} = request.params;
         const dataToUpdate = request.body;
-        try{
-            const updatedUser = await userUpdateService({user_id, ...dataToUpdate});
-            return response.json(updatedUser);
-        }catch(err){
-            console.log(err, "<---")
-            // return response.send(err);
-        }
-
+        
+        const updatedUser = await userUpdateService({user_id, ...dataToUpdate});
+        
+        return response.json(updatedUser);
     }
  
     static delete = async(request: Request, response: Response) => {
