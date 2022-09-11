@@ -7,15 +7,16 @@ export type IUserResponse = Omit<User, "password">;
 export type IIDObject = { user_id: string };
 
 export type IUpdateUser = {
+  user_id: string;
   name?: string;
   email?: string;
   cpf?: string;
-  birthdate?: string;
   celphone?: string;
+  birthdate?: string;
   description?: string;
+  CEP?: string;
   state?: string;
   city?: string;
-  CEP?: string;
   street?: string;
   number?: number;
   complement?: string;

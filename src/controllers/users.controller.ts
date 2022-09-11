@@ -37,8 +37,9 @@ export default class UserController {
     static update = async(request: Request, response: Response) => {
         const {user_id} = request.params;
         const dataToUpdate = request.body;
-        const updatedUser = await userUpdateService(user_id, dataToUpdate);
-
+        
+        const updatedUser = await userUpdateService({user_id, ...dataToUpdate});
+        
         return response.json(updatedUser);
     }
  

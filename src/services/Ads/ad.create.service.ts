@@ -32,8 +32,8 @@ const createAdService = async (bodyContent: IAdCreation) => {
   newAd.vehicleType = bodyContent.vehicleType;
   newAd.image = bodyContent.image;
   newAd.gallery = bodyContent.gallery;
-  newAd.createdOn = bodyContent.createdOn;
-  newAd.user = bodyContent.user;
+  newAd.createdOn = new Date();
+  newAd.user = user;
   newAd.isActive = bodyContent.isActive;
 
   adRepo.create(newAd);

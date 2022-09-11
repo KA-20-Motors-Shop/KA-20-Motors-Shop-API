@@ -5,10 +5,11 @@ import User from "../../models/User";
 import bcrypt from "bcrypt"
 
 
-const userUpdateService =  async(user_id: string, dataObject: IUpdateUser) => {
+const userUpdateService =  async(dataObject: IUpdateUser) => {
+    
     const userRepository = AppDataSource.getRepository(User);
 
-    const user:any = await userRepository.findOne({where:{id:user_id}});
+    const user = await userRepository.findOne({where:{id:dataObject.user_id}});
     
     if(!user){
         throw new AppError('User not found', 404);
@@ -18,16 +19,20 @@ const userUpdateService =  async(user_id: string, dataObject: IUpdateUser) => {
         const hashedPassword = bcrypt.hashSync(dataObject.password, 8);   
         dataObject.password = hashedPassword;
     }
+    
+    const {user_id, ...remainingDataObject} = dataObject
 
     const updatedUser = {
         ...user,
-        ...dataObject,
+        ...remainingDataObject,
     }
 
-    await userRepository.update(user!.id, updatedUser);
-
-    const {password, ...remaingKeys} = updatedUser
-    return remaingKeys
+    // await userRepository.update(user!.id, updatedUser); // ERROR LINE
+    await userRepository.save(updatedUser);
+    
+    const {password, ...remaingKeys} = updatedUser;
+    
+    return remaingKeys;
 
 }   
 
