@@ -1,15 +1,9 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  JoinColumn,
-  OneToMany,
-} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
 import Comment from "./Comment";
 import Ad from "./Ad";
 
-@Entity("Users")
+@Entity("User")
 class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -59,8 +53,8 @@ class User {
   @OneToMany(() => Ad, (ad) => ad.user)
   ads: Ad[];
 
-  @OneToMany(() => Comment, comment => comment.user, {
-    eager:true
+  @OneToMany(() => Comment, (comment) => comment.user, {
+    eager: true,
   })
   comments: Comment[];
 }

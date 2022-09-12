@@ -26,7 +26,7 @@ class Ad {
   @Column("integer")
   mileage: number;
 
-  @Column("money")
+  @Column("decimal")
   price: number;
 
   @Column()
