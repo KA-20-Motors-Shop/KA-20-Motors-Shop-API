@@ -1,14 +1,11 @@
-import bcrypt from "bcrypt";
 import app from "../../app";
 import { AppDataSource } from "../../data-source";
 import { DataSource } from "typeorm";
 import request from "supertest";
 import userCreateService from "../../services/users/users.create.service";
 
-describe("Login and authentication routes", () => {
+describe("Create, read ads", () => {
   let connection: DataSource;
-
-  let jsonwebtoken = require("jsonwebtoken");
 
   beforeAll(async () => {
     await AppDataSource.initialize()
@@ -22,7 +19,7 @@ describe("Login and authentication routes", () => {
     await connection.destroy();
   });
 
-  test("Login returning token", async () => {
+  test("Should insert new ad information ", async () => {
     const userData = {
       email: "test@test.com",
       name: "Ag",
@@ -39,16 +36,32 @@ describe("Login and authentication routes", () => {
       password: "1234",
       accountType: "seller",
     };
-    const loginData = {
-      email: "test@test.com",
-      password: "1234",
+
+    const user = await userCreateService(userData);
+
+    const adData = {
+      adType: "sell",
+      title: "Vend carro",
+      year: 2011,
+      mileage: 4000,
+      price: 40000.0,
+      description: "De fato é um carro",
+      vehicleType: "Car",
+      image: "imageban/21938jdsk",
+      isActive: true,
+      gallery: ["http://www.imageban.com/93487shdjsh82"],
+      user: { id: user.id },
     };
 
-    await request(app).post("/users").send(userData);
+    const response = await request(app).post("/ads").send(adData);
 
-    const response = await request(app).post("/users/login").send(loginData);
+    expect(response.status).toBe(201);
+  });
 
-    expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveProperty("token");
+  test("Should be able to return a list ads", async () => {
+    const response = await request(app).get("/ads");
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("map");
   });
 });
