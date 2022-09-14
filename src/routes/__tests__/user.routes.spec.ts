@@ -1,8 +1,9 @@
-import userCreateService from "../../services/users/users.create.service";
+import app from "../../app";
 import { AppDataSource } from "../../data-source";
 import { DataSource } from "typeorm";
+import request from "supertest";
 
-describe("Create an user", () => {
+describe("Create, read users", () => {
   let connection: DataSource;
 
   beforeAll(async () => {
@@ -17,14 +18,14 @@ describe("Create an user", () => {
     await connection.destroy();
   });
 
-  test("Should insert the information of the new user in the database", async () => {
+  test("Should insert new user information ", async () => {
     const userData = {
-      email: "a@a.com",
+      email: "test@test.com",
       name: "Ag",
       cpf: "30000000",
       birthdate: "1000-01-01",
       celphone: "999999999",
-      description: "aaaaaa",
+      description: "a",
       state: "RS",
       city: "Imbe",
       CEP: "90000-00",
@@ -35,8 +36,17 @@ describe("Create an user", () => {
       accountType: "seller",
     };
 
-    const newUser = await userCreateService(userData);
+    const response = await request(app).post("/users").send(userData);
 
-    expect(newUser.email).toEqual("a@a.com");
+    expect(response.status).toBe(201);
+
+    expect(response.body.email).toEqual("test@test.com");
+  });
+
+  test("Should be able to return a list users", async () => {
+    const response = await request(app).get("/users");
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("map");
   });
 });
