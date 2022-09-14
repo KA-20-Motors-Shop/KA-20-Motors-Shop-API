@@ -5,12 +5,10 @@ import { DataSource } from "typeorm";
 import request from "supertest";
 import userCreateService from "../../services/users/users.create.service";
 
-let auth: { [k: string]: any } = {};
-
-let jsonwebtoken = require("jsonwebtoken");
-
-describe("Create, read, update, delete users", () => {
+describe("Login and authentication routes", () => {
   let connection: DataSource;
+
+  let jsonwebtoken = require("jsonwebtoken");
 
   beforeAll(async () => {
     await AppDataSource.initialize()
@@ -20,7 +18,11 @@ describe("Create, read, update, delete users", () => {
       );
   });
 
-  beforeEach(async () => {
+  afterAll(async () => {
+    await connection.destroy();
+  });
+
+  test("Login returning token", async () => {
     const userData = {
       email: "test@test.com",
       name: "Ag",
@@ -42,44 +44,60 @@ describe("Create, read, update, delete users", () => {
       password: "1234",
     };
 
-    const user = await userCreateService(userData);
+    await request(app).post("/users").send(userData);
+
     const response = await request(app).post("/users/login").send(loginData);
 
-    auth.token = response.body.token;
-    auth.current_user_id = jsonwebtoken.decode(auth.token).user_id;
-  });
-
-  afterAll(async () => {
-    await connection.destroy();
-  });
-
-  afterEach(async () => {
-    await connection.destroy();
-  });
-
-  test("Update user information with auth", async () => {
-    const newData = {
-      email: "test2@test2.com",
-      name: "Agnes",
-    };
-
-    const response = await request(app)
-      .patch("/users/auth")
-      .send(newData)
-      .set("authorization", auth.token);
-
-    expect(response.body.length).toBe(1);
     expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty("token");
   });
 
-  test("Update user information without auth", async () => {
-    const newData = {
-      email: "test2@test2.com",
-      name: "Agnes",
-    };
+  // test("Update user information with auth", async () => {
+  //   let auth: { [k: string]: any } = {};
+  //   const userData = {
+  //     email: "teste@teste.com",
+  //     name: "Ag",
+  //     cpf: "30000000",
+  //     birthdate: "1000-01-01",
+  //     celphone: "999999999",
+  //     description: "a",
+  //     state: "RS",
+  //     city: "Imbe",
+  //     CEP: "90000-00",
+  //     street: "Rua blabla",
+  //     number: 1111,
+  //     complement: "none",
+  //     password: "1234",
+  //     accountType: "seller",
+  //   };
 
-    const response = await request(app).patch("/users/auth").send(newData);
+  //   const postUser = await request(app).post("/users").send(userData);
 
-    expect(response.statusCode).toBe(401);
-  });
+  //   console.log(postUser);
+
+  //   const newData = {
+  //     name: "Agne",
+  //   };
+
+  //   const loginData = {
+  //     email: "teste@teste.com",
+  //     password: "1234",
+  //   };
+
+  //   const responseToken = await request(app)
+  //     .post("/users/login")
+  //     .send(loginData);
+
+  //   auth.token = responseToken.body.token;
+  //   auth.current_user_id = jsonwebtoken.decode(auth.token).user_id;
+
+  //   const response = await request(app)
+  //     .patch("/users/auth")
+  //     .send(newData)
+  //     .set("authorization", `Bearer ${auth.token}`);
+
+  //   console.log(response);
+
+  //   expect(response.statusCode).toBe(200);
+  // });
 });

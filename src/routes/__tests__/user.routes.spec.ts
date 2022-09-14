@@ -1,14 +1,10 @@
-import bcrypt from "bcrypt";
 import app from "../../app";
-import jsonwebtoken from "jsonwebtoken";
 import { AppDataSource } from "../../data-source";
 import { DataSource } from "typeorm";
 import request from "supertest";
-import userCreateService from "../../services/users/users.create.service";
 
-describe("Create, read, update, delete users", () => {
+describe("Create, read users", () => {
   let connection: DataSource;
-  let auth = {};
 
   beforeAll(async () => {
     await AppDataSource.initialize()
@@ -45,12 +41,12 @@ describe("Create, read, update, delete users", () => {
     expect(response.status).toBe(201);
 
     expect(response.body.email).toEqual("test@test.com");
+  });
 
-    test("Should be able to return a list users", async () => {
-      const response = await request(app).get("/users");
+  test("Should be able to return a list users", async () => {
+    const response = await request(app).get("/users");
 
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("map");
-    });
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("map");
   });
 });
