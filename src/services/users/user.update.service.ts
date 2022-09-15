@@ -26,7 +26,9 @@ const userUpdateService =  async(dataObject: IUpdateUser) => {
         ...user,
         ...remainingDataObject,
     }
-
+    // console.log(dataObject);
+    // console.log(user);
+    // console.log(updatedUser);
     // await userRepository.update(user!.id, updatedUser); // ERROR LINE
     await userRepository.save(updatedUser);
     

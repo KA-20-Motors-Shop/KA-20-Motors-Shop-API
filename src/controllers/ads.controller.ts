@@ -3,6 +3,8 @@ import listAdService from "../services/Ads/ad.list.service";
 import updateAdService from "../services/Ads/ad.patch.service";
 import createAdService from "../services/Ads/ad.create.service";
 import adListByUserService from "../services/Ads/ad.listbyuser.service";
+import adIndexService from "../services/Ads/ad.listOne.service";
+import adDeleteService from "../services/Ads/ad.delete.service";
 
 export default class AdsController {
   static store = async (request: Request, response: Response) => {
@@ -18,13 +20,23 @@ export default class AdsController {
     return response.json(ads);
   };
 
-  static index = async (request: Request, response: Response) => {};
+  static index = async (request: Request, response: Response) => {
+    const {ad_id} = request.params;
+    const ad = await adIndexService(ad_id);
+
+    return response.json(ad);
+  };
 
   static listAdByUser = async (request: Request, response: Response) => {
     const { user_id } = request.params;
-    const ads = await adListByUserService({ user_id });
 
-    return response.json(ads);
+    try{
+      const ads = await adListByUserService({ user_id });
+      return response.json(ads);
+    }catch(err) {
+      return response.send(err)
+    }
+
   };
 
   static update = async (request: Request, response: Response) => {
@@ -59,5 +71,10 @@ export default class AdsController {
     return response.status(200).json(ad);
   };
 
-  static delete = async (request: Request, response: Response) => {};
+  static delete = async (request: Request, response: Response) => {
+    const {ad_id} = request.params;
+    
+    const deletedAd = await adDeleteService({ad_id});
+    return response.status(204).json()
+  };
 }

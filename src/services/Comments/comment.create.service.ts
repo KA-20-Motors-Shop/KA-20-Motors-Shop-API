@@ -25,7 +25,7 @@ const createCommentService = async ({description, ad, user,}: ICommentCreation) 
   const newComment = new Comment();
   newComment.description = description;
   newComment.createdOn = new Date();
-  newComment.ad = ad;
+  newComment.ad = selectedAd;
   newComment.user = selectedUser;
 
   commentRepo.create(newComment);

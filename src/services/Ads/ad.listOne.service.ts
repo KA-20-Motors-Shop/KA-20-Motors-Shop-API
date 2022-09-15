@@ -2,7 +2,7 @@ import { AppDataSource } from "../../data-source";
 import AppError from "../../errors/AppError";
 import Ad from "../../models/Ad";
 
-const listAdDetails = async (id: string) => {
+const adIndexService = async (id: string) => {
   const adsRepository = AppDataSource.getRepository(Ad);
 
   const ad = await adsRepository.findOneBy({ id: id });
@@ -14,4 +14,4 @@ const listAdDetails = async (id: string) => {
   return ad;
 };
 
-export default listAdDetails;
+export default adIndexService;
