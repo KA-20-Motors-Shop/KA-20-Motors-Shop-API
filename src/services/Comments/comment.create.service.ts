@@ -4,9 +4,18 @@ import Comment from "../../models/Comment";
 import User from "../../models/User";
 import AppError from "../../errors/AppError";
 import Ad from "../../models/Ad";
+import jwt from "jsonwebtoken";
 
 const createCommentService = async ({description, ad, user,}: ICommentCreation) => {
   const commentRepo = AppDataSource.getRepository(Comment);
+
+  // const user_id = jwt.verify(token as string, "secret_key", (error:any, decoded:any) => {
+  //   if(error){
+  //     throw new AppError('Invalid Token', 401);
+  //   }
+  //   const {sub} =  decoded;
+  //   return sub
+  // })
 
   const userRepository = AppDataSource.getRepository(User);
   const selectedUser = await userRepository.findOne({where:{id: user.id}})

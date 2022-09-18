@@ -14,9 +14,8 @@ const verifyIsCommentOwner = async (request: Request, response: Response, next: 
 
     const commentRepository = AppDataSource.getRepository(Comment);
     console.log('cheguei aqui')
-    const comment: any= await commentRepository.findOne({where:{id:comment_id}});
-    console.log('agora aqui')
-    console.log(comment, " <----------------- COMENT USER ID")
+    const comment: any= await commentRepository.findOne({where:{id:comment_id}, relations:['user', 'ad']});
+    
 
    
 
