@@ -56,6 +56,7 @@ class User {
   @OneToMany(() => Comment, (comment) => comment.user, {
     eager: true,
   })
+
   comments: Comment[];
 }
 

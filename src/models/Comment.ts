@@ -24,7 +24,9 @@ class Comment {
   @JoinColumn({ name: "ad_id" })
   ad: Ad;
 
-  @ManyToOne(type => User, user => user.comments)
+  @ManyToOne(type => User, user => user.comments, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({name: "user_id"})
   user: User
 }

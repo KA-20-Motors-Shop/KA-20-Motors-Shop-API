@@ -5,7 +5,7 @@ import Comment from "../../models/Comment";
 const commentListService = async () => {
     
     const commentRepository = AppDataSource.getRepository(Comment);
-    const comments = await commentRepository.find()
+    const comments = await commentRepository.find({relations:['user', 'ad']})
     return comments
   
 };

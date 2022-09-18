@@ -17,7 +17,7 @@ const userLoginService = async ({email, password}: IUserLogin ) => {
         throw new AppError("Wrong email/passoword.", 403)
     }
 
-    const token = jwt.sign({email:email}, "secret_key",{expiresIn: '1d'})
+    const token = jwt.sign({email:email}, "secret_key",{expiresIn: '1d', subject: user.id})
 
     return {"token": token};
 }
